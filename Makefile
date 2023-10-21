@@ -14,7 +14,6 @@ all: SDL/build/libSDL3.so
 pull_SDL:
 	@${ECHO} "${CYAN}Pulling SDL...${RESET}"
 	@git submodule init
-	@git submodule update
 	@git submodule update --remote SDL
 	@${ECHO} "${GREEN}Done!${RESET}"
 

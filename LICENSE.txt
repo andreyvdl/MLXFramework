@@ -1,0 +1,14 @@
+Copyright andrey_vdl 2023
+
+This project, created by a student, is released under an open-source license.
+You are welcome to use, modify, and enhance it as you see fit. However, we
+kindly request that you provide proper attribution to the original creator,
+Andrey, and any other contributors.
+Please note that SDL (Simple DirectMedia Layer) is not our property. Any
+references to SDL should acknowledge its creators and show support for their
+work by visiting the official SDL repository at:
+
+GitHub Repository: https://github.com/libsdl-org/SDL
+Official Website: https://libsdl.org
+
+Thank you for respecting these terms and supporting open-source development.

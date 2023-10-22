@@ -1,4 +1,4 @@
-Copyright andrey_vdl 2023
+Copyright andreyvdl 2023
 
 This project, created by a student, is released under an open-source license.
 You are welcome to use, modify, and enhance it as you see fit. However, we

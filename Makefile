@@ -48,6 +48,14 @@ else ifeq (${shell ls /usr/bin/cc}, /usr/bin/cc)
 	C_COMPILE=/usr/bin/cc
 endif
 
+ifeq (${shell ls /bin/cp}, /bin/cp)
+	COPY=/bin/cp
+else ifeq (${shell ls /usr/bin/cp}, /usr/bin/cp)
+	COPY=/usr/bin/cp
+endif
+
+CD=cd
+
 CYAN=\033[36m
 RESET=\033[0m
 GREEN=\033[32m
@@ -55,10 +63,11 @@ YELLOW=\033[33m
 
 NAME=libmlxfw.a
 C_MLX_FLAGS=-Wall -Wextra -Werror
+BUILD_SDL=SDL/build/.libs/libSDL2.a
 
-all: SDL/build/libSDL3.so ${NAME}
+all: ${BUILD_SDL} #${NAME}
 
-${NAME}: ${MLX_OBJECTS}
+${NAME}: ${BUILD_SDL} ${MLX_OBJECTS}
 	@${ECHO} "${CYAN}putting files in library...${RESET}"
 	@${AR} rcs ${NAME} ${MLX_OBJECTS}
 
@@ -72,19 +81,20 @@ pull_SDL:
 	@${GIT} submodule update --remote SDL
 	@${ECHO} "${GREEN}Done!${RESET}"
 
-SDL/build/libSDL3.so:
+${BUILD_SDL}:
 	@${ECHO} "${YELLOW}If it result in an error run 'make pull_SDL' and try" \
 	"again.${RESET}"
 	@${ECHO} "${CYAN}Building SDL...${RESET}"
-	@${CMAKE} -S SDL -B SDL/build && cmake --build SDL/build
+	@${CD} SDL; ./configure
+	@${MAKE} -C SDL -j --no-print-directory
+	@${COPY} ${BUILD_SDL} ./${NAME}
 	@${ECHO} "${GREEN}Done!${RESET}"
 
 clean_SDL:
 	@${ECHO} "${CYAN}Cleaning SDL...${RESET}"
-	@${MAKE} -C SDL/build clean --no-print-directory
-	@${REMOVE} -fr SDL/build
+	@${MAKE} -C SDL distclean -j --no-print-directory
 	@${ECHO} "${GREEN}Done!${RESET}"
 
-re_SDL: clean_SDL pull_SDL SDL/build/libSDL3.so
+re_SDL: clean_SDL pull_SDL ${BUILD_SDL}
 
 .PHONY: pull_SDL clean_SDL re_SDL all
